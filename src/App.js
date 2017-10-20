@@ -5,11 +5,19 @@ class App extends Component {
 
   constructor() {
     super();
-    this.state = { messages: [
-                    {name: 'john', content: 'Hello'},
-                    {name: 'bob', content: 'How are you doing'},
-                    {name: 'john', content: 'Fine, thank you'}
-                  ]}
+    this.state = { messages: []}
+  }
+
+  componentDidMount() {
+    [
+      {name: 'john', content: 'Hello'},
+      {name: 'bob', content: 'How are you doing'},
+      {name: 'john', content: 'Fine, thank you'}
+    ].map(this.addMessage)
+  }
+
+  addMessage = message => {
+    this.setState(st => ({messages: st.messages.concat(message)}))
   }
 
   displayMessage = (message) => (
