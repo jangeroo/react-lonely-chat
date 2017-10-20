@@ -5,15 +5,14 @@ class App extends Component {
 
   constructor() {
     super();
-    this.state = { messages: []}
-  }
-
-  componentDidMount() {
-    [
-      {name: 'michael', content: 'Hello'},
-      {name: 'BOT', content: 'How are you doing'},
-      {name: 'michael', content: 'Fine, thank you'}
-    ].map(this.addMessage)
+    this.state = {
+      messages: [],
+      botResponses: [
+        'I\'m not a bot.',
+        'Meh.',
+        'Whatever, man.'
+      ],
+    }
   }
 
   addMessage = message => {
@@ -23,7 +22,12 @@ class App extends Component {
   submitFunction = event => {
     event.preventDefault()
     this.addMessage({name: 'michael', content: this.input.value})
-    setTimeout(this.addMessage, 1000, ({name: 'BOT', content: 'Hello, I\'m not a bot'}))
+    setTimeout(this.addMessage, 1000,
+      ({
+        name: 'BOT',
+        content: this.state.botResponses[Math.floor(Math.random() * this.state.botResponses.length)]
+      })
+    );
     this.form.reset()
   }
  
