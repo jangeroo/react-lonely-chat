@@ -17,6 +17,17 @@ class App extends Component {
     }
   }
 
+  componentDidUpdate() {
+    console.log(this.state)
+  }
+
+  addUsername = name => this.setState(st => ({username: name}), this.usernameForm.reset())
+
+  submitUsername = event =>{
+    event.preventDefault();
+    this.addUsername(this.usernameInput.value)
+  }
+
   addMessage = message => {
     this.setState(st => ({messages: st.messages.concat(message)}))
   }
@@ -44,42 +55,34 @@ class App extends Component {
     </div>
   )
 
-  addUsername = name => this.setState(st => ({username: name}), this.usernameForm.reset())
-
-  submitUsername = event =>{
-    event.preventDefault();
-    this.addUsername(this.usernameInput.value)
-  }
-
-  componentDidUpdate() {
-    console.log(this.state)
-  }
-  
   render() {
-
-    return (
-      <div>
-        
+    if (!this.state.username) {
+      return (
         <div id='username-input'>
+          Hey there! What's your name?
           <form ref={r => this.usernameForm = r} onSubmit={this.submitUsername}>
             <input ref={r => this.usernameInput = r}/>
             <button type='submit'>Submit</button>
           </form>
         </div>
-        
-        <div id='message-display'>
-          {this.state.messages.map(this.displayMessage)}
-        </div>
+      )
+    }
+    else {
+      return (
+        <div>     
+          <div id='message-display'>
+            {this.state.messages.map(this.displayMessage)}
+          </div>
 
-        <div id='message-input'>
-          <form ref={r => this.messageForm = r} onSubmit={this.sendMessage}>
-            <input ref={r => this.messageInput = r}/>
-            <button type='submit'>send</button>
-          </form>
+          <div id='message-input'>
+            <form ref={r => this.messageForm = r} onSubmit={this.sendMessage}>
+              <input ref={r => this.messageInput = r}/>
+              <button type='submit'>send</button>
+            </form>
+          </div>
         </div>
-
-      </div>
-    );
+      );
+    }
   }
 }
 
