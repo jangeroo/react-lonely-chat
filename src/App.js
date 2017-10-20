@@ -14,6 +14,8 @@ class App extends Component {
       {name: 'bob', content: 'How are you doing'},
       {name: 'john', content: 'Fine, thank you'}
     ].map(this.addMessage)
+
+    setInterval(this.addMessage, 1000, ({name: 'troll', content: 'Boo!'}))
   }
 
   addMessage = message => {
