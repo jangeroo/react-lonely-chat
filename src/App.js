@@ -2,23 +2,27 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
+
+  displayMessage = (message) => (
+    <div>
+      <span><b>{message.name}</b> </span>
+      <span>{message.content}</span>
+    </div>
+  )
+
   render() {
+    
+    var messages = [
+      {name: 'john', content: 'Hello'},
+      {name: 'bob', content: 'How are you doing'},
+      {name: 'john', content: 'Fine, thank you'}
+    ]
+
     return (
       <div>
 
         <div id='message-display'>
-          <div className='message'>
-            <span className='name'><b>john</b> </span>
-            <span className='message-content'>Hello</span>
-          </div>
-          <div className='message'>
-            <span className='name'><b>bob</b> </span>
-            <span className='message-content'>How are you doing</span>
-          </div>
-          <div className='message'>
-            <span className='name'><b>john</b> </span>
-            <span className='message-content'>Fine, thank you</span>
-          </div>
+          {messages.map(this.displayMessage)}
         </div>
 
         <div id='message-input'>
