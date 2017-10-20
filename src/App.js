@@ -22,7 +22,8 @@ class App extends Component {
   submitFunction = event => {
     event.preventDefault()
     this.addMessage({name: 'michael', content: this.input.value})
-    setTimeout(this.addMessage, 1000,
+    var delay = (Math.random() * (5 - 1) + 1);
+    setTimeout(this.addMessage, delay * 1000,
       ({
         name: 'BOT',
         content: this.state.botResponses[Math.floor(Math.random() * this.state.botResponses.length)]
