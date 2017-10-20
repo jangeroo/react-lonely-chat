@@ -6,6 +6,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      username: '',
       messages: [],
       bots: ['Josie', 'Frederic'],
       botResponses: [
@@ -20,9 +21,12 @@ class App extends Component {
     this.setState(st => ({messages: st.messages.concat(message)}))
   }
 
-  submitFunction = event => {
+  sendMessage = event => {
     event.preventDefault()
-    this.addMessage({name: 'michael', content: this.input.value})
+    this.addMessage({
+      name: this.state.username,
+      content: this.messageInput.value
+    })
     var delay = (Math.random() * (3 - 1) + 1);
     setTimeout(this.addMessage, delay * 1000,
       ({
@@ -30,7 +34,7 @@ class App extends Component {
         content: this.state.botResponses[Math.floor(Math.random() * this.state.botResponses.length)]
       })
     );
-    this.form.reset()
+    this.messageForm.reset()
   }
  
   displayMessage = (message) => (
@@ -40,18 +44,36 @@ class App extends Component {
     </div>
   )
 
+  addUsername = name => this.setState(st => ({username: name}), this.usernameForm.reset())
+
+  submitUsername = event =>{
+    event.preventDefault();
+    this.addUsername(this.usernameInput.value)
+  }
+
+  componentDidUpdate() {
+    console.log(this.state)
+  }
+  
   render() {
 
     return (
       <div>
-
+        
+        <div id='username-input'>
+          <form ref={r => this.usernameForm = r} onSubmit={this.submitUsername}>
+            <input ref={r => this.usernameInput = r}/>
+            <button type='submit'>Submit</button>
+          </form>
+        </div>
+        
         <div id='message-display'>
           {this.state.messages.map(this.displayMessage)}
         </div>
 
         <div id='message-input'>
-          <form ref={r => this.form = r} onSubmit={this.submitFunction}>
-            <input ref={r => this.input = r}/>
+          <form ref={r => this.messageForm = r} onSubmit={this.sendMessage}>
+            <input ref={r => this.messageInput = r}/>
             <button type='submit'>send</button>
           </form>
         </div>
